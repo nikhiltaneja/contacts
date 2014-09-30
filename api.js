@@ -1,4 +1,4 @@
-var express = require('espress'),
+var express = require('express'),
   Bourne = require('bourne'),
   bodyParser = require('body-parser'),
 
@@ -6,11 +6,11 @@ var express = require('espress'),
   router = express.Router();
 
 router
-  .user(function (req, res, next){
+  .use(function (req, res, next){
     if (!req.user) req.user = { id: 1 };
     next();
   })
-  .user(bodyParser.json())
+  .use(bodyParser.json())
   .route('/contact')
     .get(function (req, res){
       db.find({ userId: parseInt(req.user.id, 10) }, function (err, data) {
@@ -26,7 +26,7 @@ router
       });
     });
 
-router.
+router
   .param('id', function (req, res, next) {
     req.dbQuery = { id: parseInt(req.params.id, 10) }
   })
